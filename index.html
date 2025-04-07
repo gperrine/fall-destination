@@ -97,45 +97,45 @@
     }
 
     function checkSecondAnswer() {
-  const input = document.getElementById('answer2').value.trim();
-  const linkDiv = document.getElementById('linkOutput');
+      const input = document.getElementById('answer2').value.trim();
+      const linkDiv = document.getElementById('linkOutput');
 
-  if (input === decode(encodedAnswer2)) {
-    const endTime = new Date();
-    const duration = Math.round((endTime - startTime) / 1000); // seconds
-    const prizeLink = decode(encodedPrizeLink);
+      if (input === decode(encodedAnswer2)) {
+        const endTime = new Date();
+        const duration = Math.round((endTime - startTime) / 1000); // seconds
+        const prizeLink = decode(encodedPrizeLink);
 
-    // Display the prize
-    linkDiv.innerHTML = `
-      🎉 <b>UD</b>id it, <strong>${playerName}</strong>!<br>
-      Congrats to you and to <b>Jordan</b><br>
-      Time taken: <strong>${duration}</strong> seconds.<br>
-      <img src="${prizeLink}" alt="Prize" class="img-fluid mt-2" style="max-height:300px;">
-    `;
+        // Display the prize
+        linkDiv.innerHTML = `
+          🎉 <b>UD</b>id it, <strong>${playerName}</strong>!<br>
+          Congrats to you and to <b>Jordan</b><br>
+          Time taken: <strong>${duration}</strong> seconds.<br>
+          <img src="${prizeLink}" alt="Prize" class="img-fluid mt-2" style="max-height:300px;">
+        `;
 
-    // ✅ Log the result to Google Sheets
-    fetch("https://script.google.com/macros/s/AKfycbzMhkhpeWJepByiuCnxuRUsQPTL3zlPJovXFGFnhzbqedanUd4NGVK0PriHL4x0fn-o/exec", {
-      method: "POST",
-      body: JSON.stringify({
-        name: playerName,
-        time: duration
-      }),
-      headers: {
-        "Content-Type": "application/json"
+        // ✅ Log the result to Google Sheets using no-cors
+        fetch("https://script.google.com/macros/s/AKfycbzMhkhpeWJepByiuCnxuRUsQPTL3zlPJovXFGFnhzbqedanUd4NGVK0PriHL4x0fn-o/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: playerName,
+            time: duration
+          })
+        })
+        .then(() => {
+          console.log("Attempted to log (no-cors mode, no response available)");
+        })
+        .catch(err => {
+          console.error("Logging failed", err);
+        });
+
+      } else {
+        linkDiv.textContent = "Not quite — try again!";
       }
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Logged to Google Sheets:", data);
-    })
-    .catch(err => {
-      console.error("Logging failed", err);
-    });
-
-  } else {
-    linkDiv.textContent = "Not quite — try again!";
-  }
-}
+    }
   </script>
 </body>
 </html>
