@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fall Destination Riddle</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: sans-serif; margin: 40px; max-width: 600px; }
+    input, button { font-size: 1.2em; margin-top: 10px; }
+    #binaryOutput { margin-top: 20px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h2>Solve the Cipher</h2>
+  <p>What does this mean? <strong>Cnffjbeq vf Zl Fbppre Ahzore</strong></p>
+  <input type="text" id="answer" placeholder="Your answer here">
+  <button onclick="checkAnswer()">Submit</button>
+
+  <div id="binaryOutput"></div>
+
+  <script>
+    function textToBinary(str) {
+      return str.split('').map(char => {
+        return char.charCodeAt(0).toString(2).padStart(8, '0');
+      }).join(' ');
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById('answer').value.trim();
+      const correct = "3"; // The decoded answer
+      const hiddenLink = "https://imgur.com/yourImage"; // <- Replace with actual prize image link
+
+      if (input === correct) {
+        const binary = textToBinary(hiddenLink);
+        document.getElementById('binaryOutput').innerText = "Binary:\n" + binary;
+      } else {
+        document.getElementById('binaryOutput').innerText = "Try again!";
+      }
+    }
+  </script>
+</body>
+</html>
