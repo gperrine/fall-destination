@@ -47,10 +47,13 @@
   </div>
 
   <script>
-    // NICE TRY MATT! 
+    // NICE TRY MATT!
     const encodedAnswer1 = "Mw=="; 
     const encodedAnswer2 = "MTg="; 
-    const encodedPrizeLink = "aHR0cHM6Ly9pbWd1ci5jb20vYS96Z2NDNmF3"; 
+
+    // Hidden location of prize image on GitHub Pages
+    const encodedPrizeLink = "aHR0cHM6Ly9ncGVycmluZS5naXRodWIuaW8vZmFsbC1kZXN0aW5hdGlvbi9hc3NldHMvcHJpemUucG5n";
+
     const encodedRiddle = "SG93IG1hbnkgaG91cnMgZG9lcyBpdCB0YWtlIHRvIGRyaXZlIGZyb20gRWxrdG9uIHRvIExTVT8=";
 
     function decode(str) {
@@ -86,7 +89,7 @@
 
       if (input === decode(encodedAnswer2)) {
         const prizeLink = decode(encodedPrizeLink);
-        linkDiv.innerHTML = `🎉 You did it! <br> Congratulations to you and to Jordan!!:<br><a href="${prizeLink}" target="_blank">${prizeLink}</a>`;
+        linkDiv.innerHTML = `🎉 You did it! <br> Congratulations to you and to Jordan!!:<br><a href="${prizeLink}" target="_blank"><img src="${prizeLink}" alt="Prize" class="img-fluid mt-2" style="max-height:300px;"></a>`;
       } else {
         linkDiv.textContent = "Not quite — try again!";
       }
