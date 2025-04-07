@@ -1,32 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fall Destination Riddle</title>
-  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; margin: 40px; max-width: 600px; }
-    input, button { font-size: 1.2em; margin-top: 10px; display: block; }
-    #binaryOutput, #linkOutput { margin-top: 20px; white-space: pre-wrap; }
-    #step2 { display: none; margin-top: 30px; }
+    body {
+      padding-top: 4rem;
+      background-color: #f8f9fa;
+    }
+    .binary-box, .link-box {
+      white-space: pre-wrap;
+      background: #f1f1f1;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
-  <h2>Solve the Cipher - See where Jordan is going!</h2>
-  <p>What does this mean? <strong>Cnffjbeq vf Zl Fbppre Ahzore</strong></p>
-  <input type="text" id="answer1" placeholder="First answer">
-  <button onclick="checkFirstAnswer()">Submit</button>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0">
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4">🧩 Fall Destination Riddle</h2>
+            <p><strong>Step 1:</strong> What does this mean? <code>Cnffjbeq vf Zl Fbppre Ahzore</code></p>
+            <div class="mb-3">
+              <input type="text" id="answer1" class="form-control" placeholder="Enter the first answer">
+            </div>
+            <button onclick="checkFirstAnswer()" class="btn btn-primary w-100 mb-3">Submit</button>
+            <div id="binaryOutput" class="binary-box d-none"></div>
 
-  <div id="binaryOutput"></div>
-
-  <div id="step2">
-    <h3>Step 2: Decode the above and answer the riddle</h3>
-    <input type="text" id="answer2" placeholder="Your answer">
-    <button onclick="checkSecondAnswer()">Unlock Location</button>
-    <div id="linkOutput"></div>
+            <div id="step2" class="mt-4 d-none">
+              <h5>Step 2: Decode the binary above and answer the riddle</h5>
+              <input type="text" id="answer2" class="form-control mt-2" placeholder="Your answer">
+              <button onclick="checkSecondAnswer()" class="btn btn-success mt-3 w-100">Unlock Prize</button>
+              <div id="linkOutput" class="link-box mt-3"></div>
+            </div>
+          </div>
+        </div>
+        <p class="text-muted text-center mt-4" style="font-size: 0.9rem;">Made with 🧠 + ❤️</p>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Obfuscated values
+    // NICE TRY MATT! 
     const encodedAnswer1 = "Mw=="; 
     const encodedAnswer2 = "MTg="; 
     const encodedPrizeLink = "aHR0cHM6Ly9pbWd1ci5jb20vYS96Z2NDNmF3"; 
@@ -44,26 +65,30 @@
 
     function checkFirstAnswer() {
       const input = document.getElementById('answer1').value.trim();
+      const binaryDiv = document.getElementById('binaryOutput');
+      const step2 = document.getElementById('step2');
+
       if (input === decode(encodedAnswer1)) {
         const binary = textToBinary(decode(encodedRiddle));
-        document.getElementById('binaryOutput').innerText = "Binary:\n" + binary;
-        document.getElementById('step2').style.display = 'block';
+        binaryDiv.textContent = "Binary:\n" + binary;
+        binaryDiv.classList.remove('d-none');
+        step2.classList.remove('d-none');
       } else {
-        document.getElementById('binaryOutput').innerText = "Try again!";
-        document.getElementById('step2').style.display = 'none';
+        binaryDiv.textContent = "Try again!";
+        binaryDiv.classList.remove('d-none');
+        step2.classList.add('d-none');
       }
     }
 
     function checkSecondAnswer() {
       const input = document.getElementById('answer2').value.trim();
+      const linkDiv = document.getElementById('linkOutput');
+
       if (input === decode(encodedAnswer2)) {
         const prizeLink = decode(encodedPrizeLink);
-        document.getElementById('linkOutput').innerHTML = `
-          🎉 You did it! Congratulations to you and to Jordan!!!:<br>
-          <a href="${prizeLink}" target="_blank">${prizeLink}</a>
-        `;
+        linkDiv.innerHTML = `🎉 You did it! Here's your prize:<br><a href="${prizeLink}" target="_blank">${prizeLink}</a>`;
       } else {
-        document.getElementById('linkOutput').innerText = "Not quite — try again!";
+        linkDiv.textContent = "Not quite — try again!";
       }
     }
   </script>
