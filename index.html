@@ -5,38 +5,59 @@
   <meta charset="UTF-8">
   <style>
     body { font-family: sans-serif; margin: 40px; max-width: 600px; }
-    input, button { font-size: 1.2em; margin-top: 10px; }
-    #binaryOutput { margin-top: 20px; white-space: pre-wrap; }
+    input, button { font-size: 1.2em; margin-top: 10px; display: block; }
+    #binaryOutput, #linkOutput { margin-top: 20px; white-space: pre-wrap; }
+    #step2 { display: none; margin-top: 30px; }
   </style>
 </head>
 <body>
   <h2>Solve the Cipher</h2>
   <p>What does this mean? <strong>Cnffjbeq vf Zl Fbppre Ahzore</strong></p>
-  <input type="text" id="answer" placeholder="Your answer here">
-  <button onclick="checkAnswer()">Submit</button>
+  <input type="text" id="answer1" placeholder="First answer">
+  <button onclick="checkFirstAnswer()">Submit</button>
 
   <div id="binaryOutput"></div>
 
+  <div id="step2">
+    <h3>Step 2: Decode the binary above and enter the result below</h3>
+    <input type="text" id="answer2" placeholder="Decoded text">
+    <button onclick="checkSecondAnswer()">Unlock Prize</button>
+    <div id="linkOutput"></div>
+  </div>
+
   <script>
+    const correctAnswer1 = "3";
+    const decodedBinaryAnswer = "https://imgur.com/yourImage"; // <- Update this with your real link
+
     function textToBinary(str) {
-      return str.split('').map(char => {
-        return char.charCodeAt(0).toString(2).padStart(8, '0');
-      }).join(' ');
+      return str.split('').map(char =>
+        char.charCodeAt(0).toString(2).padStart(8, '0')
+      ).join(' ');
     }
 
-    function checkAnswer() {
-      const input = document.getElementById('answer').value.trim();
-      const correct = "3"; // The decoded answer
-      const hiddenLink = "https://imgur.com/yourImage"; // <- Replace with actual prize image link
-
-      if (input === correct) {
-        const binary = textToBinary(hiddenLink);
+    function checkFirstAnswer() {
+      const input = document.getElementById('answer1').value.trim();
+      if (input === correctAnswer1) {
+        const binary = textToBinary(decodedBinaryAnswer);
         document.getElementById('binaryOutput').innerText = "Binary:\n" + binary;
+        document.getElementById('step2').style.display = 'block';
       } else {
         document.getElementById('binaryOutput').innerText = "Try again!";
+        document.getElementById('step2').style.display = 'none';
+      }
+    }
+
+    function checkSecondAnswer() {
+      const input = document.getElementById('answer2').value.trim();
+      if (input === decodedBinaryAnswer) {
+        document.getElementById('linkOutput').innerHTML = `
+          🎉 You did it! Here's your prize: 
+          <br><a href="${decodedBinaryAnswer}" target="_blank">${decodedBinaryAnswer}</a>
+        `;
+      } else {
+        document.getElementById('linkOutput').innerText = "Incorrect! Try decoding again.";
       }
     }
   </script>
 </body>
 </html>
-
