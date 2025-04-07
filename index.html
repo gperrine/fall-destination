@@ -70,7 +70,7 @@
 
       if (input === decode(encodedAnswer1)) {
         const binary = textToBinary(decode(encodedRiddle));
-        binaryDiv.textContent = "Binary:\n" + binary;
+        binaryDiv.textContent = binary;
         binaryDiv.classList.remove('d-none');
         step2.classList.remove('d-none');
       } else {
