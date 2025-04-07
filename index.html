@@ -19,15 +19,17 @@
   <div id="binaryOutput"></div>
 
   <div id="step2">
-    <h3>Step 2: Decode the binary above and enter the result below</h3>
-    <input type="text" id="answer2" placeholder="Decoded text">
+    <h3>Step 2: Decode the binary above and answer the riddle</h3>
+    <input type="text" id="answer2" placeholder="Your answer">
     <button onclick="checkSecondAnswer()">Unlock Prize</button>
     <div id="linkOutput"></div>
   </div>
 
   <script>
     const correctAnswer1 = "3";
-    const decodedBinaryAnswer = "https://imgur.com/yourImage"; // <- Update this with your real link
+    const riddleText = "How many hours does it take to drive from Elkton to LSU?";
+    const finalAnswer = "18";
+    const prizeLink = "https://imgur.com/a/zgcC6aw";
 
     function textToBinary(str) {
       return str.split('').map(char =>
@@ -38,7 +40,7 @@
     function checkFirstAnswer() {
       const input = document.getElementById('answer1').value.trim();
       if (input === correctAnswer1) {
-        const binary = textToBinary(decodedBinaryAnswer);
+        const binary = textToBinary(riddleText);
         document.getElementById('binaryOutput').innerText = "Binary:\n" + binary;
         document.getElementById('step2').style.display = 'block';
       } else {
@@ -49,13 +51,13 @@
 
     function checkSecondAnswer() {
       const input = document.getElementById('answer2').value.trim();
-      if (input === decodedBinaryAnswer) {
+      if (input === finalAnswer) {
         document.getElementById('linkOutput').innerHTML = `
-          🎉 You did it! Here's your prize: 
-          <br><a href="${decodedBinaryAnswer}" target="_blank">${decodedBinaryAnswer}</a>
+          🎉 You did it! Here's your prize:<br>
+          <a href="${prizeLink}" target="_blank">${prizeLink}</a>
         `;
       } else {
-        document.getElementById('linkOutput').innerText = "Incorrect! Try decoding again.";
+        document.getElementById('linkOutput').innerText = "Not quite — try again!";
       }
     }
   </script>
