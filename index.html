@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <h2>Solve the Cipher</h2>
+  <h2>Solve the Cipher - See where Jordan is going!</h2>
   <p>What does this mean? <strong>Cnffjbeq vf Zl Fbppre Ahzore</strong></p>
   <input type="text" id="answer1" placeholder="First answer">
   <button onclick="checkFirstAnswer()">Submit</button>
@@ -19,17 +19,22 @@
   <div id="binaryOutput"></div>
 
   <div id="step2">
-    <h3>Step 2: Decode the binary above and answer the riddle</h3>
+    <h3>Step 2: Decode the above and answer the riddle</h3>
     <input type="text" id="answer2" placeholder="Your answer">
-    <button onclick="checkSecondAnswer()">Unlock Prize</button>
+    <button onclick="checkSecondAnswer()">Unlock Location</button>
     <div id="linkOutput"></div>
   </div>
 
   <script>
-    const correctAnswer1 = "3";
-    const riddleText = "How many hours does it take to drive from Elkton to LSU?";
-    const finalAnswer = "18";
-    const prizeLink = "https://imgur.com/a/zgcC6aw";
+    // Obfuscated values
+    const encodedAnswer1 = "Mw=="; 
+    const encodedAnswer2 = "MTg="; 
+    const encodedPrizeLink = "aHR0cHM6Ly9pbWd1ci5jb20vYS96Z2NDNmF3"; 
+    const encodedRiddle = "SG93IG1hbnkgaG91cnMgZG9lcyBpdCB0YWtlIHRvIGRyaXZlIGZyb20gRWxrdG9uIHRvIExTVT8=";
+
+    function decode(str) {
+      return atob(str);
+    }
 
     function textToBinary(str) {
       return str.split('').map(char =>
@@ -39,8 +44,8 @@
 
     function checkFirstAnswer() {
       const input = document.getElementById('answer1').value.trim();
-      if (input === correctAnswer1) {
-        const binary = textToBinary(riddleText);
+      if (input === decode(encodedAnswer1)) {
+        const binary = textToBinary(decode(encodedRiddle));
         document.getElementById('binaryOutput').innerText = "Binary:\n" + binary;
         document.getElementById('step2').style.display = 'block';
       } else {
@@ -51,9 +56,10 @@
 
     function checkSecondAnswer() {
       const input = document.getElementById('answer2').value.trim();
-      if (input === finalAnswer) {
+      if (input === decode(encodedAnswer2)) {
+        const prizeLink = decode(encodedPrizeLink);
         document.getElementById('linkOutput').innerHTML = `
-          🎉 You did it! Here's your prize:<br>
+          🎉 You did it! Congratulations to you and to Jordan!!!:<br>
           <a href="${prizeLink}" target="_blank">${prizeLink}</a>
         `;
       } else {
